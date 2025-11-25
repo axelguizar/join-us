@@ -28,14 +28,30 @@
             transition: all 0.5s ease;
         }
         
-        /* Media Query: Ajusta el tamaño de fuente para pantallas más pequeñas (celulares) */
+        /* Estilo para los textos animados que se arrastran */
+        .scrolling-text {
+            display: none; 
+            position: absolute; 
+            font-size: 2em; /* Tamaño base para desktop */
+            color: black;
+            opacity: 0.15; 
+            white-space: nowrap; 
+            pointer-events: none; 
+        }
+
+        /* MEDIA QUERY: Ajustes para pantallas pequeñas (Celulares) */
         @media (max-width: 600px) {
+            /* Texto central (inicial) */
             #center-message {
-                font-size: 2em; /* Texto inicial más pequeño en celular */
+                font-size: 1.5em; /* Reducido para celular */
             }
-            /* El mensaje final @yzyblackmarket también se ajusta después del clic */
+            /* Texto central (final, @yzyblackmarket) */
             #center-message[style*="font-size: 5em"] {
-                font-size: 3.5em !important; 
+                font-size: 3em !important; /* Reducido para celular */
+            }
+            /* Texto de la animación */
+            .scrolling-text {
+                font-size: 1.5em; /* Reducido para celular */
             }
         }
 
@@ -43,17 +59,6 @@
             opacity: 0.8;
         }
         
-        /* Estilo para los textos animados que se arrastran */
-        .scrolling-text {
-            display: none; 
-            position: absolute; 
-            font-size: 2em;
-            color: black;
-            opacity: 0.15; 
-            white-space: nowrap; 
-            pointer-events: none; 
-        }
-
         .audio-player {
             display: none; 
         }
@@ -99,10 +104,11 @@
                     // 2. Cambia el texto central y su estilo
                     centerMsg.textContent = MENSAJE_FINAL;
                     centerMsg.style.cursor = 'default';
+                    // NOTA: Se usa el tamaño '5em' estándar para desktop. El CSS lo ajusta en móvil.
                     centerMsg.style.fontSize = '5em'; 
                 })
                 .catch(error => {
-                    // Si el audio falla (e.g., archivo no encontrado), inicia la animación y cambia el mensaje
+                    // Si el audio falla, inicia la animación y cambia el mensaje de todos modos
                     if (!running) {
                         initializeTexts();
                         running = true;
